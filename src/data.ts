@@ -40,7 +40,7 @@ export const DB: {
       fase:['semai','vegetatif','bunting','generatif'],
       keparahan:'Tinggi',
       gejalaKunci:['sundep','beluk','bekas_gerek','daun_mengering'],
-      semua_gejala:['sundep','beluk','bekas_gerek','daun_mengering','anakan_mati'],
+      semua_gejala:['sundep','beluk','bekas_gerek','daun_mengering','anakan_mati','daun_mengering_atas'],
       lokasi:'Batang, pelepah daun',
       ciri_khas:[
         {label:'Fase vegetatif',val:'Pucuk layu & mengering (sundep) — cabut mudah'},
@@ -138,8 +138,8 @@ export const DB: {
       badge:'badge-warning',
       fase:['semai','vegetatif'],
       keparahan:'Sedang',
-      gejalaKunci:['tabung_ganjur','anakan_berbentuk_tabung','daun_menggulung'],
-      semua_gejala:['tabung_ganjur','anakan_berbentuk_tabung','daun_menggulung'],
+      gejalaKunci:['tabung_ganjur','daun_menggulung_semai'],
+      semua_gejala:['tabung_ganjur','daun_menggulung_semai'],
       lokasi:'Titik tumbuh anakan',
       ciri_khas:[
         {label:'Gejala khas',val:'Anakan berubah menjadi tabung hijau-putih mirip "pelepah bambu" (tabung ganjur)'},
@@ -148,6 +148,26 @@ export const DB: {
       ],
       pengendalian:'Tanam varietas tahan (Inpara 3, 6, 7). Pengaturan air: keringkan lahan sesaat setelah tanam. Musuh alami: Platygaster oryzae. Insektisida karbofuran bila >5% tabung ganjur.',
       catatan_kalbar:'Endemik di beberapa wilayah pasang surut Kubu Raya dan Pontianak. Sering muncul di awal musim hujan.',
+    },
+    {
+      id:'orong_orong',
+      nama:'Orong-orong (anjing tanah)',
+      ilmiah:'Gryllotalpa orientalis',
+      tipe:'Hama',
+      badge:'badge-warning',
+      fase:['semai','vegetatif'],
+      keparahan:'Sedang',
+      gejalaKunci:['tanaman_layu_akar','terowongan_tanah'],
+      semua_gejala:['tanaman_layu_akar','terowongan_tanah','anakan_sangat_sedikit'],
+      lokasi:'Akar dan batang bawah tanah',
+      ciri_khas:[
+        {label:'Gejala khas',val:'Tanaman layu dan mati mendadak secara sporadis — akar terputus/terpotong saat dicabut'},
+        {label:'Bukti fisik',val:'Terowongan kecil di permukaan tanah; serangga hitam-coklat bersayap, kaki depan seperti cangkul'},
+        {label:'Pola kerusakan',val:'Acak/sporadis, tidak membentuk pola dari tengah (beda dengan tikus)'},
+        {label:'Waktu aktif',val:'Aktif malam hari; lebih parah di lahan macak-macak atau kering sesaat'},
+      ],
+      pengendalian:'Genangan air menekan populasi — orong-orong tidak tahan tergenang terus-menerus. Tangkap dengan lampu perangkap malam hari. Karbofuran granul di tanah bila serangan berat (>2 lubang/m²).',
+      catatan_kalbar:'Lebih sering muncul di lahan pasang surut yang berselang-seling kering-macak. Serangan meningkat saat musim kemarau atau lahan sawah bukaan baru yang belum tergenang.',
     },
   ],
   penyakit: [
@@ -160,7 +180,7 @@ export const DB: {
       fase:['semai','vegetatif','bunting','generatif'],
       keparahan:'Sangat tinggi',
       gejalaKunci:['bercak_belah_ketupat','pusat_abu','blas_leher'],
-      semua_gejala:['bercak_belah_ketupat','pusat_abu','blas_leher','daun_terbakar'],
+      semua_gejala:['bercak_belah_ketupat','pusat_abu','blas_leher','daun_terbakar','daun_mengering_atas'],
       lokasi:'Daun, leher malai, buku batang',
       ciri_khas:[
         {label:'Blast daun',val:'Bercak belah ketupat, tepi coklat, pusat abu-abu/putih. Stadium vegetatif.'},
@@ -180,7 +200,7 @@ export const DB: {
       fase:['semai','vegetatif','bunting','generatif'],
       keparahan:'Tinggi',
       gejalaKunci:['kresek','hawar_tepi','daun_keabu'],
-      semua_gejala:['kresek','hawar_tepi','daun_keabu','daun_mengering'],
+      semua_gejala:['kresek','hawar_tepi','daun_keabu','daun_mengering','daun_menggulung_semai','daun_mengering_atas'],
       lokasi:'Daun (tepi ke tengah)',
       ciri_khas:[
         {label:'Gejala kresek',val:'Tanaman <30 HST: daun menggulung, layu, hijau keabu-abuan, lalu mati'},
@@ -300,7 +320,7 @@ export const DB: {
       fase:['vegetatif','bunting','generatif'],
       keparahan:'Sedang',
       gejalaKunci:['tepi_daun_coklat','nekrosis_tepi','daun_tua_rusak'],
-      semua_gejala:['tepi_daun_coklat','nekrosis_tepi','daun_tua_rusak'],
+      semua_gejala:['tepi_daun_coklat','nekrosis_tepi','daun_tua_rusak','daun_mengering_atas'],
       lokasi:'Tepi daun tua → mati',
       ciri_khas:[
         {label:'Gejala khas',val:'Tepi dan ujung daun tua nekrosis (coklat seperti terbakar), mulai dari daun bawah'},
@@ -384,6 +404,8 @@ export const GEJALA_DB: Record<string, Symptom[]> = {
     {id:'akar_coklat_busuk',label:'Akar coklat/busuk berbau',desc:'Akar coklat gelap, berbau sulfur/busuk'},
     {id:'anakan_sangat_sedikit',label:'Anakan sangat sedikit',desc:'Jumlah anakan jauh di bawah normal'},
     {id:'tabung_ganjur',label:'Anakan berbentuk tabung',desc:'Anakan berubah jadi tabung hijau-putih'},
+    {id:'tanaman_layu_akar',label:'Tanaman layu/mati, akar rusak',desc:'Rumpun layu mendadak lalu mati; akar terputus saat dicabut'},
+    {id:'terowongan_tanah',label:'Lubang/terowongan di tanah',desc:'Lubang kecil dan terowongan di permukaan tanah dekat rumpun yang mati'},
   ],
   bunting: [
     {id:'sundep',label:'Pucuk layu (masih mungkin)',desc:'Sundep akhir pada tanaman muda yang bunting'},
