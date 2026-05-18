@@ -750,7 +750,7 @@ a:focus-visible {
 .meta-pill.tipe-hama { color: var(--tanah); }
 .meta-pill.tipe-jamur, .meta-pill.tipe-bakteri, .meta-pill.tipe-virus { color: var(--langit); }
 .meta-pill.tipe-defisiensi, .meta-pill.tipe-keracunan { color: var(--padi-deep); }
-.meta-pill.severity { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.meta-pill.severity { color: var(--ink-mute); }
 .meta-pill.location { color: var(--ink-mute); }
 
 /* Match bar */
@@ -1109,7 +1109,7 @@ a:focus-visible {
   .btn { font-size: 15px; }
 
   .result-body { padding: 18px 18px 20px; }
-  .result h3 { font-size: 20px; margin-top: 6px; }
+  .result h3 { font-size: 26px; margin-top: 6px; font-weight: 600; }
   .result-sci { font-size: 13px; }
   .result-eyebrow { font-size: 11px; letter-spacing: 0.22em; flex-wrap: wrap; gap: 6px; }
   .result-eyebrow .sep { width: 16px; }
@@ -1149,5 +1149,5 @@ a:focus-visible {
   .masthead-meta { font-size: 11px; gap: 8px; }
   .phase-card { padding: 18px 8px 14px; }
   .phase-name { font-size: 17px; }
-  .result h3 { font-size: 18px; }
+  .result h3 { font-size: 22px; }
 }
