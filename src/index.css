@@ -491,6 +491,98 @@ a:focus-visible {
 }
 .tip b { color: var(--ink); font-family: var(--font-display); font-style: italic; font-weight: 600; }
 
+/* ---------- Area picker ---------- */
+
+.area-picker {
+  margin-bottom: 20px;
+}
+
+.area-picker-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.03em;
+  margin-bottom: 12px;
+}
+
+.area-picker-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.area-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 14px 18px;
+  min-width: 148px;
+  background: var(--paper);
+  border: 2px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+.area-btn:hover {
+  border-color: var(--sawah);
+  background: var(--success-soft);
+}
+.area-btn.on {
+  border-color: var(--sawah);
+  background: var(--success-soft);
+  box-shadow: inset 0 -3px 0 var(--sawah);
+}
+
+.area-btn-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.area-btn.on .area-btn-name { color: var(--sawah-deep); }
+
+.area-btn-sub {
+  font-size: 12px;
+  color: var(--ink-mute);
+  line-height: 1.3;
+}
+
+.show-all-link {
+  background: none;
+  border: none;
+  padding: 2px 0;
+  color: var(--ink-mute);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.show-all-link:hover { color: var(--ink); }
+
+.area-empty {
+  text-align: center;
+  padding: 44px 24px;
+  color: var(--ink-mute);
+  font-size: 15px;
+  background: var(--paper-soft);
+  border-radius: var(--radius-lg);
+  border: 2px dashed var(--line-soft);
+  margin-bottom: 20px;
+  font-family: var(--font-display);
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .area-picker-row { gap: 8px; }
+  .area-btn { min-width: calc(50% - 4px); padding: 12px 14px; }
+  .area-btn-name { font-size: 15px; }
+}
+
 /* ---------- Symptom grid ---------- */
 
 .symptom-bar {

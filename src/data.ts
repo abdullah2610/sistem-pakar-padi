@@ -1,3 +1,5 @@
+export type KelompokGejala = 'daun' | 'batang' | 'akar' | 'tanaman' | 'malai';
+
 export interface DetailCiri {
   label: string;
   val: string;
@@ -23,6 +25,7 @@ export interface Symptom {
   id: string;
   label: string;
   desc: string;
+  kelompok: KelompokGejala;
 }
 
 export const DB: {
@@ -376,54 +379,54 @@ export const DB: {
 
 export const GEJALA_DB: Record<string, Symptom[]> = {
   semai: [
-    {id:'bibit_hilang',label:'Bibit hilang/terpotong',desc:'Bibit dicabut atau batang terpotong di bawah air'},
-    {id:'telur_pink',label:'Telur merah muda di batang',desc:'Kelompok telur oranye-pink di batang/pematang'},
-    {id:'daun_menggulung_semai',label:'Daun menggulung & layu',desc:'Daun menggulung lalu layu & mati pada bibit muda'},
-    {id:'tabung_ganjur',label:'Anakan berbentuk tabung',desc:'Anakan berubah jadi tabung hijau-putih seperti bambu'},
-    {id:'daun_kuning_merata',label:'Daun kuning merata',desc:'Semua daun kuning dari ujung, tanaman kerdil'},
-    {id:'daun_ungu_merah',label:'Daun/batang ungu-merah',desc:'Warna ungu/merah pada daun bawah dan batang'},
-    {id:'daun_muda_belang',label:'Daun muda belang kuning',desc:'Strip/bercak kuning di daun muda (tengah daun)'},
-    {id:'bercak_coklat_ujung',label:'Bercak coklat di ujung daun',desc:'Titik coklat kecil di ujung/bawah daun, menyebar'},
-    {id:'kresek',label:'Layu mendadak (kresek)',desc:'Tanaman muda layu, hijau keabu, lalu mati'},
+    {id:'bibit_hilang',   label:'Bibit hilang/terpotong',      desc:'Bibit dicabut atau batang terpotong di bawah air',            kelompok:'tanaman'},
+    {id:'telur_pink',     label:'Telur merah muda di batang',  desc:'Kelompok telur oranye-pink di batang/pematang',              kelompok:'tanaman'},
+    {id:'daun_menggulung_semai', label:'Daun menggulung & layu', desc:'Daun menggulung lalu layu & mati pada bibit muda',         kelompok:'daun'},
+    {id:'tabung_ganjur',  label:'Anakan berbentuk tabung',     desc:'Anakan berubah jadi tabung hijau-putih seperti bambu',        kelompok:'batang'},
+    {id:'daun_kuning_merata', label:'Daun kuning merata',      desc:'Semua daun kuning dari ujung, tanaman kerdil',               kelompok:'daun'},
+    {id:'daun_ungu_merah',label:'Daun/batang ungu-merah',      desc:'Warna ungu/merah pada daun bawah dan batang',                kelompok:'daun'},
+    {id:'daun_muda_belang',label:'Daun muda belang kuning',    desc:'Strip/bercak kuning di daun muda (tengah daun)',             kelompok:'daun'},
+    {id:'bercak_coklat_ujung', label:'Bercak coklat di ujung daun', desc:'Titik coklat kecil di ujung/bawah daun, menyebar',      kelompok:'daun'},
+    {id:'kresek',         label:'Layu mendadak (kresek)',      desc:'Tanaman muda layu, hijau keabu, lalu mati',                  kelompok:'tanaman'},
   ],
   vegetatif: [
-    {id:'sundep',label:'Pucuk layu & mati (sundep)',desc:'Pucuk tengah layu, kering, mudah dicabut'},
-    {id:'hopperburn',label:'Tanaman terbakar (hopperburn)',desc:'Daun kuning-kering seperti terbakar, dari bawah'},
-    {id:'batang_terpotong',label:'Batang terpotong miring',desc:'Batang terpotong serong, sisa berserakan'},
-    {id:'kerusakan_tengah',label:'Kerusakan dari tengah petakan',desc:'Bercak kosong di tengah, meluas ke pinggir'},
-    {id:'bercak_belah_ketupat',label:'Bercak belah ketupat di daun',desc:'Bercak coklat berbentuk belah ketupat, pusat abu-abu'},
-    {id:'bercak_oval_coklat',label:'Bercak oval coklat di daun',desc:'Bercak bulat-oval coklat gelap, tanpa pusat abu-abu'},
-    {id:'hawar_tepi',label:'Hawar dari tepi daun',desc:'Tepi daun abu-abu, meluas ke dalam, daun mengering'},
-    {id:'bercak_upih',label:'Bercak di upih/pelepah daun',desc:'Bercak tak beraturan di pelepah daun dekat air'},
-    {id:'daun_kuning_merata',label:'Daun kuning merata',desc:'Daun tua kuning merata, anakan sedikit'},
-    {id:'daun_kuning_oranye',label:'Daun kuning-oranye menyeluruh',desc:'Daun muda kuning oranye, tanaman kerdil parah'},
-    {id:'daun_ungu_merah',label:'Daun/batang ungu-merah',desc:'Warna ungu di daun bawah dan batang'},
-    {id:'bercak_coklat_ujung',label:'Bercak coklat di ujung daun',desc:'Titik coklat dari ujung daun menyebar ke bawah'},
-    {id:'daun_muda_belang',label:'Daun muda belang kuning',desc:'Bercak/strip kuning di daun muda, daun tengah'},
-    {id:'tepi_daun_coklat',label:'Tepi daun tua coklat (nekrosis)',desc:'Pinggir daun tua coklat seperti terbakar'},
-    {id:'akar_coklat_busuk',label:'Akar coklat/busuk berbau',desc:'Akar coklat gelap, berbau sulfur/busuk'},
-    {id:'anakan_sangat_sedikit',label:'Anakan sangat sedikit',desc:'Jumlah anakan jauh di bawah normal'},
-    {id:'tabung_ganjur',label:'Anakan berbentuk tabung',desc:'Anakan berubah jadi tabung hijau-putih'},
-    {id:'tanaman_layu_akar',label:'Tanaman layu/mati, akar rusak',desc:'Rumpun layu mendadak lalu mati; akar terputus saat dicabut'},
-    {id:'terowongan_tanah',label:'Lubang/terowongan di tanah',desc:'Lubang kecil dan terowongan di permukaan tanah dekat rumpun yang mati'},
+    {id:'sundep',              label:'Pucuk layu & mati (sundep)',         desc:'Pucuk tengah layu, kering, mudah dicabut',                     kelompok:'batang'},
+    {id:'hopperburn',          label:'Tanaman terbakar (hopperburn)',      desc:'Daun kuning-kering seperti terbakar, dari bawah',              kelompok:'tanaman'},
+    {id:'batang_terpotong',    label:'Batang terpotong miring',           desc:'Batang terpotong serong, sisa berserakan',                     kelompok:'batang'},
+    {id:'kerusakan_tengah',    label:'Kerusakan dari tengah petakan',     desc:'Bercak kosong di tengah, meluas ke pinggir',                   kelompok:'tanaman'},
+    {id:'bercak_belah_ketupat',label:'Bercak belah ketupat di daun',      desc:'Bercak coklat berbentuk belah ketupat, pusat abu-abu',         kelompok:'daun'},
+    {id:'bercak_oval_coklat',  label:'Bercak oval coklat di daun',        desc:'Bercak bulat-oval coklat gelap, tanpa pusat abu-abu',          kelompok:'daun'},
+    {id:'hawar_tepi',          label:'Hawar dari tepi daun',              desc:'Tepi daun abu-abu, meluas ke dalam, daun mengering',           kelompok:'daun'},
+    {id:'bercak_upih',         label:'Bercak di upih/pelepah daun',       desc:'Bercak tak beraturan di pelepah daun dekat air',               kelompok:'batang'},
+    {id:'daun_kuning_merata',  label:'Daun kuning merata',                desc:'Daun tua kuning merata, anakan sedikit',                       kelompok:'daun'},
+    {id:'daun_kuning_oranye',  label:'Daun kuning-oranye menyeluruh',     desc:'Daun muda kuning oranye, tanaman kerdil parah',                kelompok:'daun'},
+    {id:'daun_ungu_merah',     label:'Daun/batang ungu-merah',            desc:'Warna ungu di daun bawah dan batang',                          kelompok:'daun'},
+    {id:'bercak_coklat_ujung', label:'Bercak coklat di ujung daun',       desc:'Titik coklat dari ujung daun menyebar ke bawah',               kelompok:'daun'},
+    {id:'daun_muda_belang',    label:'Daun muda belang kuning',           desc:'Bercak/strip kuning di daun muda, daun tengah',                kelompok:'daun'},
+    {id:'tepi_daun_coklat',    label:'Tepi daun tua coklat (nekrosis)',   desc:'Pinggir daun tua coklat seperti terbakar',                     kelompok:'daun'},
+    {id:'akar_coklat_busuk',   label:'Akar coklat/busuk berbau',          desc:'Akar coklat gelap, berbau sulfur/busuk',                       kelompok:'akar'},
+    {id:'anakan_sangat_sedikit',label:'Anakan sangat sedikit',            desc:'Jumlah anakan jauh di bawah normal',                           kelompok:'tanaman'},
+    {id:'tabung_ganjur',       label:'Anakan berbentuk tabung',           desc:'Anakan berubah jadi tabung hijau-putih',                       kelompok:'batang'},
+    {id:'tanaman_layu_akar',   label:'Tanaman layu/mati, akar rusak',     desc:'Rumpun layu mendadak lalu mati; akar terputus saat dicabut',   kelompok:'akar'},
+    {id:'terowongan_tanah',    label:'Lubang/terowongan di tanah',        desc:'Lubang kecil dan terowongan di permukaan tanah dekat rumpun yang mati', kelompok:'akar'},
   ],
   bunting: [
-    {id:'sundep',label:'Pucuk layu (masih mungkin)',desc:'Sundep akhir pada tanaman muda yang bunting'},
-    {id:'blas_leher',label:'Leher malai coklat/patah',desc:'Pangkal leher malai coklat kehitaman, malai patah'},
-    {id:'hawar_tepi',label:'Hawar dari tepi daun',desc:'Gejala HDB berlanjut ke fase bunting'},
-    {id:'bercak_belah_ketupat',label:'Bercak belah ketupat di daun',desc:'Blast daun masih aktif di fase bunting'},
-    {id:'bercak_upih',label:'Bercak naik ke daun dari upih',desc:'Sheath blight meluas ke daun'},
-    {id:'batang_terpotong',label:'Batang/malai dipotong tikus',desc:'Tikus memotong sebelum panen'},
-    {id:'tepi_daun_coklat',label:'Tepi daun tua coklat',desc:'Defisiensi K berlanjut ke bunting'},
-    {id:'daun_tua_rusak',label:'Daun tua rusak meluas',desc:'Kerusakan progresif dari daun bawah'},
+    {id:'sundep',            label:'Pucuk layu (masih mungkin)',       desc:'Sundep akhir pada tanaman muda yang bunting',      kelompok:'batang'},
+    {id:'blas_leher',        label:'Leher malai coklat/patah',         desc:'Pangkal leher malai coklat kehitaman, malai patah', kelompok:'batang'},
+    {id:'hawar_tepi',        label:'Hawar dari tepi daun',             desc:'Gejala HDB berlanjut ke fase bunting',              kelompok:'daun'},
+    {id:'bercak_belah_ketupat', label:'Bercak belah ketupat di daun', desc:'Blast daun masih aktif di fase bunting',            kelompok:'daun'},
+    {id:'bercak_upih',       label:'Bercak naik ke daun dari upih',    desc:'Sheath blight meluas ke daun',                     kelompok:'batang'},
+    {id:'batang_terpotong',  label:'Batang/malai dipotong tikus',      desc:'Tikus memotong sebelum panen',                     kelompok:'batang'},
+    {id:'tepi_daun_coklat',  label:'Tepi daun tua coklat',             desc:'Defisiensi K berlanjut ke bunting',                 kelompok:'daun'},
+    {id:'daun_tua_rusak',    label:'Daun tua rusak meluas',            desc:'Kerusakan progresif dari daun bawah',               kelompok:'daun'},
   ],
   generatif: [
-    {id:'beluk',label:'Malai putih hampa (beluk)',desc:'Malai baru keluar putih seluruhnya, gabah hampa'},
-    {id:'blas_leher',label:'Leher malai coklat patah',desc:'Blast leher — malai hitam/coklat & patah'},
-    {id:'gabah_hampa',label:'Gabah hampa/berubah warna',desc:'Banyak gabah hampa, beras mengapur'},
-    {id:'malai_rontok',label:'Malai dipotong/rontok',desc:'Malai dipotong atau bulir berserakan'},
-    {id:'bau_busuk',label:'Bau menyengat di sawah',desc:'Aroma busuk dari walang sangit'},
-    {id:'hawar_tepi',label:'Hawar daun berlanjut',desc:'HDB masih aktif di fase panen'},
-    {id:'daun_mengering_atas',label:'Daun atas mengering',desc:'Daun bendera/atas mengering — bukan gejala normal'},
+    {id:'beluk',             label:'Malai putih hampa (beluk)',         desc:'Malai baru keluar putih seluruhnya, gabah hampa',   kelompok:'malai'},
+    {id:'blas_leher',        label:'Leher malai coklat patah',         desc:'Blast leher — malai hitam/coklat & patah',          kelompok:'malai'},
+    {id:'gabah_hampa',       label:'Gabah hampa/berubah warna',        desc:'Banyak gabah hampa, beras mengapur',                kelompok:'malai'},
+    {id:'malai_rontok',      label:'Malai dipotong/rontok',            desc:'Malai dipotong atau bulir berserakan',               kelompok:'malai'},
+    {id:'bau_busuk',         label:'Bau menyengat di sawah',           desc:'Aroma busuk dari walang sangit',                    kelompok:'tanaman'},
+    {id:'hawar_tepi',        label:'Hawar daun berlanjut',             desc:'HDB masih aktif di fase panen',                     kelompok:'daun'},
+    {id:'daun_mengering_atas',label:'Daun atas mengering',             desc:'Daun bendera/atas mengering — bukan gejala normal', kelompok:'daun'},
   ],
 };

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { DB, GEJALA_DB } from './data';
-import type { DiagnosisItem } from './data';
+import type { DiagnosisItem, Symptom, KelompokGejala } from './data';
 import {
   PadiStalk,
   BatikBackground,
@@ -34,6 +34,14 @@ const PHASES: Phase[] = [
   { id: 'bunting', label: 'Bunting', sub: '60–80 HST', num: 'III' },
   { id: 'generatif', label: 'Generatif', sub: '80–120 HST', num: 'IV' },
 ];
+
+const KELOMPOK_INFO: Record<KelompokGejala, { label: string; sub: string }> = {
+  daun:    { label: 'Daun',                 sub: 'Bercak, warna, mengering' },
+  batang:  { label: 'Batang / Pucuk',       sub: 'Pucuk mati, batang rusak, upih' },
+  akar:    { label: 'Akar / Tanah',         sub: 'Akar busuk, lubang, layu' },
+  tanaman: { label: 'Tanaman Keseluruhan',  sub: 'Kerdil, terbakar, anakan' },
+  malai:   { label: 'Malai / Bulir',        sub: 'Hampa, patah, berubah warna' },
+};
 
 function tipeClass(tipe: string): string {
   const t = tipe.toLowerCase();
@@ -261,71 +269,128 @@ const Step1: React.FC<{ onPick: (id: PhaseId) => void }> = ({ onPick }) => (
   </section>
 );
 
-interface SymptomItem {
-  id: string;
-  label: string;
-  desc: string;
-}
-
 const Step2: React.FC<{
   phase: Phase;
-  symList: SymptomItem[];
+  symList: Symptom[];
   symptoms: Set<string>;
   toggleSym: (id: string) => void;
   onNext: () => void;
   onBack: () => void;
-}> = ({ phase, symList, symptoms, toggleSym, onNext, onBack }) => (
-  <section className="fade-up">
-    <div className="section-heading">
-      <div>
-        <div className="kicker">Langkah 02</div>
-        <h2>
-          Tandai <em>gejala</em> yang terlihat
-        </h2>
-      </div>
-      <p>
-        Centang gejala yang Anda amati di lapangan untuk fase{' '}
-        {phase.label.toLowerCase()}. Bisa lebih dari satu.
-      </p>
-    </div>
+}> = ({ phase, symList, symptoms, toggleSym, onNext, onBack }) => {
+  const [areas, setAreas] = useState<Set<KelompokGejala>>(() => {
+    if (symptoms.size === 0) return new Set();
+    const pre = new Set<KelompokGejala>();
+    symptoms.forEach(id => {
+      const s = symList.find(x => x.id === id);
+      if (s) pre.add(s.kelompok);
+    });
+    return pre;
+  });
+  const [showAll, setShowAll] = useState(false);
 
-    <div className="symptom-bar">
-      <div className="symptom-bar-left">
-        <span>Fase aktif</span>
-        <span className="symptom-bar-chip">
-          {phase.label} · {phase.sub}
-        </span>
-      </div>
-      <div className="symptom-bar-count">
-        {symptoms.size.toString().padStart(2, '0')} /{' '}
-        {symList.length.toString().padStart(2, '0')} gejala terpilih
-      </div>
-    </div>
+  const availableAreas = useMemo<KelompokGejala[]>(
+    () => [...new Set(symList.map(s => s.kelompok))],
+    [symList]
+  );
 
-    <div className="symptom-grid">
-      {symList.map(g => (
-        <button
-          key={g.id}
-          className={`sym ${symptoms.has(g.id) ? 'on' : ''}`}
-          onClick={() => toggleSym(g.id)}
-        >
-          <span className="sym-check"></span>
-          <div className="sym-label">{g.label}</div>
-          <div className="sym-desc">{g.desc}</div>
+  const toggleArea = (k: KelompokGejala) => {
+    setAreas(prev => {
+      const next = new Set(prev);
+      if (next.has(k)) next.delete(k); else next.add(k);
+      return next;
+    });
+    setShowAll(false);
+  };
+
+  const displayList = useMemo(
+    () => showAll || areas.size === 0 ? [] : symList.filter(s => areas.has(s.kelompok)),
+    [symList, areas, showAll]
+  );
+
+  const showGrid = showAll || areas.size > 0;
+
+  return (
+    <section className="fade-up">
+      <div className="section-heading">
+        <div>
+          <div className="kicker">Langkah 02</div>
+          <h2>
+            Tandai <em>gejala</em> yang terlihat
+          </h2>
+        </div>
+        <p>
+          Pilih bagian tanaman yang bermasalah, lalu centang gejala yang tampak.
+        </p>
+      </div>
+
+      <div className="area-picker">
+        <div className="area-picker-label">Bagian mana yang bermasalah?</div>
+        <div className="area-picker-row">
+          {availableAreas.map(k => (
+            <button
+              key={k}
+              className={`area-btn ${areas.has(k) ? 'on' : ''}`}
+              onClick={() => toggleArea(k)}
+            >
+              <span className="area-btn-name">{KELOMPOK_INFO[k].label}</span>
+              <span className="area-btn-sub">{KELOMPOK_INFO[k].sub}</span>
+            </button>
+          ))}
+        </div>
+        {!showAll && (
+          <button
+            className="show-all-link"
+            onClick={() => { setShowAll(true); setAreas(new Set()); }}
+          >
+            Tampilkan semua {symList.length} gejala sekaligus
+          </button>
+        )}
+      </div>
+
+      <div className="symptom-bar">
+        <div className="symptom-bar-left">
+          <span>Fase aktif</span>
+          <span className="symptom-bar-chip">
+            {phase.label} · {phase.sub}
+          </span>
+        </div>
+        <div className="symptom-bar-count">
+          {symptoms.size.toString().padStart(2, '0')} /{' '}
+          {symList.length.toString().padStart(2, '0')} gejala terpilih
+        </div>
+      </div>
+
+      {showGrid ? (
+        <div className="symptom-grid">
+          {displayList.map(g => (
+            <button
+              key={g.id}
+              className={`sym ${symptoms.has(g.id) ? 'on' : ''}`}
+              onClick={() => toggleSym(g.id)}
+            >
+              <span className="sym-check"></span>
+              <div className="sym-label">{g.label}</div>
+              <div className="sym-desc">{g.desc}</div>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div className="area-empty">
+          Pilih bagian tanaman di atas untuk melihat daftar gejala
+        </div>
+      )}
+
+      <div className="controls">
+        <button className="btn-ghost" onClick={onBack}>
+          ← Ganti fase
         </button>
-      ))}
-    </div>
-
-    <div className="controls">
-      <button className="btn-ghost" onClick={onBack}>
-        ← Ganti fase
-      </button>
-      <button className="btn" onClick={onNext} disabled={symptoms.size === 0}>
-        Lihat hasil diagnosa <span className="arrow">→</span>
-      </button>
-    </div>
-  </section>
-);
+        <button className="btn" onClick={onNext} disabled={symptoms.size === 0}>
+          Lihat hasil diagnosa <span className="arrow">→</span>
+        </button>
+      </div>
+    </section>
+  );
+};
 
 const Step3: React.FC<{
   results: ScoredResult[];
