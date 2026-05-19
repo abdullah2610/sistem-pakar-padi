@@ -303,7 +303,7 @@ const Step2: React.FC<{
   };
 
   const displayList = useMemo(
-    () => showAll || areas.size === 0 ? [] : symList.filter(s => areas.has(s.kelompok)),
+    () => showAll ? symList : areas.size === 0 ? [] : symList.filter(s => areas.has(s.kelompok)),
     [symList, areas, showAll]
   );
 
