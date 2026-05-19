@@ -579,7 +579,7 @@ a:focus-visible {
 
 @media (max-width: 640px) {
   .area-picker-row { gap: 8px; }
-  .area-btn { min-width: calc(50% - 4px); padding: 12px 14px; }
+  .area-btn { flex: 1 1 calc(50% - 4px); padding: 12px 14px; }
   .area-btn-name { font-size: 15px; }
 }
 
@@ -721,6 +721,10 @@ a:focus-visible {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 10px 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius);
 }
 .btn-ghost:hover { background: var(--paper-soft); border-color: var(--ink-mute); color: var(--ink); }
 
@@ -1212,7 +1216,13 @@ a:focus-visible {
 
   .match { padding: 14px 14px; gap: 10px; }
   .match-pct { font-size: 28px; }
-  .match-bar-head { font-size: 12px; letter-spacing: 0.1em; }
+  .match-bar-head {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    white-space: normal;
+    flex-direction: column;
+    gap: 2px;
+  }
 
   .facts { gap: 12px; margin-bottom: 18px; }
   .fact-label { font-size: 14px; }
